@@ -26,30 +26,34 @@ public class cardCompare {
 		JavascriptExecutor js=(JavascriptExecutor)driver;
 
 		driver.get("https://www.dbs.com.sg/personal/default.page");
+		
+		//click on cards
 		driver.findElement(By.xpath("//*[@id=\"flpHeader\"]/header/div/div[2]/ul/li[2]/a")).click();
+		//click on credit cards
 		driver.findElement(By.xpath("//*[@id=\"bodywrapper\"]/div[1]/div[1]/div/ul/li[2]/a")).click();
 		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
+		//clicking "compare" button for first credit card and retrieving title
 		driver.findElement(By.xpath("(//div[@class='option-alignment'])[1]")).click();
 		WebElement eleActualCard1=driver.findElement(By.xpath("//*[@id=\"bodywrapper\"]/div[2]/div/div[1]/div/div/div[1]/div/div[1]/div[1]/div"));
 		String actualCard1 = eleActualCard1.getText();
 		System.out.println("card1 title is:" + actualCard1);
 		
+		//clicking "compare" button for second credit card and retrieving title
 		WebElement clickCard2 = driver.findElement(By.xpath("//*[@id=\"bodywrapper\"]/div[2]/div/div[1]/div/div/div[3]/div/div[2]/div/label/div[1]/span"));
-		
 		js.executeScript("arguments[0].click();",clickCard2 );
 		
 		WebElement eleActualCard2=driver.findElement(By.xpath("//*[@id=\"bodywrapper\"]/div[2]/div/div[1]/div/div/div[3]/div/div[1]/div[1]/div"));
 		String actualCard2 = eleActualCard2.getText();
 		System.out.println("card2 title is:" + actualCard2);
-		
 		Thread.sleep(3000);
 		
+		//clicking compare button for selected cards
 		driver.findElement(By.xpath("//*[@id=\"cardCompareBtn\"]")).click();
-		
 		Thread.sleep(3000);
-
+		
+		//fetching title of displayed credit cards
 		WebElement eleCard1=driver.findElement(By.xpath("//*[@id=\"card0\"]/div[2]/div"));
 		String expectedCard1 = eleCard1.getText();
 		System.out.println(expectedCard1);
@@ -58,8 +62,7 @@ public class cardCompare {
 		String expectedCard2 = eleCard2.getText();
 		System.out.println(expectedCard2);
 		
-		
-		
+		//comparing title of displayed credit cards with previously selected credit cards
 		try{  
 			Assert.assertEquals(actualCard1, expectedCard1); 
 			Assert.assertEquals(actualCard2, expectedCard2); 
